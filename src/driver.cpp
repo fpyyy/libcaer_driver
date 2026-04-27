@@ -430,6 +430,29 @@ void Driver::updateDriverParameter(
   }
 }
 
+void Driver::reapplyStartupParameter(const std::string & name)
+{
+  const auto it = parameterMap_.find(name);
+  if (it == parameterMap_.end()) {
+    return;
+  }
+
+  rclcpp::Parameter parameter;
+  if (this->get_parameter(name, parameter)) {
+    updateParameter(it->second, parameter.get_parameter_value());
+  }
+}
+
+void Driver::reapplyStartupRunParameters()
+{
+  const std::vector<std::string> runParameterNames = {
+    "aps_enabled", "dvs_enabled", "imu_acc_enabled", "imu_accel_enabled", "imu_gyro_enabled",
+    "imu_temp_enabled"};
+  for (const auto & name : runParameterNames) {
+    reapplyStartupParameter(name);
+  }
+}
+
 void Driver::onParameterEvent(std::shared_ptr<const rcl_interfaces::msg::ParameterEvent> event)
 {
   if (event->node != this->get_fully_qualified_name()) {
@@ -460,6 +483,7 @@ void Driver::start()
 
   // ------ start camera, may get callbacks from then on
   wrapper_->startSensor();
+  reapplyStartupRunParameters();
 
   // listen to changes in ROS parameters
   parameterSubscription_ = rclcpp::AsyncParametersClient::on_parameter_event(

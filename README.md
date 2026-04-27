@@ -58,7 +58,7 @@ The build instructions follow the standard procedure for ROS2. Set the following
 
 ```bash
 repo=libcaer_driver
-url=https://github.com/ros-event-camera/${repo}.git
+url=https://github.com/fpyyy/${repo}.git
 ```
 
 and follow the build instructions [here](https://github.com/ros-misc-utilities/.github/blob/master/docs/build_ros_repository.md)
@@ -84,6 +84,12 @@ Now you need to log out and back in to the host in order for the updated group p
 
 Driver parameters (besides biases and other device-specific parameters):
 
+- ``aps_enabled``: (DAVIS, defaults to True) enables/disables APS frame readout. This can be set in the launch file; the driver reapplies the launch value after the sensor starts so it matches runtime ``ros2 param set`` behavior.
+- ``dvs_enabled``: (defaults to True) enables/disables DVS event readout.
+- ``imu_acc_enabled``: (DAVIS, defaults to True) enables/disables IMU accelerometer readout.
+- ``imu_accel_enabled``: (DvXplorer, defaults to True) enables/disables IMU accelerometer readout.
+- ``imu_gyro_enabled``: (defaults to True) enables/disables IMU gyroscope readout.
+- ``imu_temp_enabled``: (DAVIS, defaults to True) enables/disables IMU temperature readout.
 - ``auto_exposure_enabled``: (defaults to False) enables/disables driver-provided auto exposure for APS frames.
 - ``auto_exposure_illumination``: (0-255, defaults to 127) target brightness for APS frame exposure
 - ``auto_exposure_hysteresis``: (0-0.5, defaults to 0.0625) relative tolerance for brightness error before adjusting exposure time.

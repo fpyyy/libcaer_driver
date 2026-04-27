@@ -84,6 +84,8 @@ private:
     const std::shared_ptr<RosBoolParameter> & rp);
   void updateParameter(std::shared_ptr<RosParameter> rp, const rclcpp::ParameterValue & v);
   void updateDriverParameter(std::shared_ptr<RosParameter> rp, const rclcpp::ParameterValue & vArg);
+  void reapplyStartupRunParameters();
+  void reapplyStartupParameter(const std::string & name);
 
   template <typename T>
   T get_or(const std::string & name, const T & def)
