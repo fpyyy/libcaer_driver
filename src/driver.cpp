@@ -567,6 +567,7 @@ void Driver::framePacketCallback(const libcaer::events::FrameEventPacket & packe
     for (auto & img : msgs) {
       sensor_msgs::msg::CameraInfo::UniquePtr cinfo(
         new sensor_msgs::msg::CameraInfo(cameraInfoMsg_));
+      cinfo->header.stamp = img->header.stamp;
       const int32_t currentTime = wrapper_->getExposureTime();
       if (autoExposureEnabled_ && exposureParameter_) {
         if (frameDelay_ == 0) {

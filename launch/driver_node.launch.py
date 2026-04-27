@@ -25,27 +25,27 @@ from launch_ros.actions import Node
 def launch_setup(context, *args, **kwargs):
     """Create simple node."""
     node = Node(
-        package='libcaer_driver',
-        executable='driver_node',
-        output='screen',
+        package="libcaer_driver",
+        executable="driver_node",
+        output="screen",
         # prefix=["xterm -e gdb -ex run --args"],
-        name=LaunchConfig('camera_name'),
+        name=LaunchConfig("camera_name"),
         parameters=[
             {
-                'device_type': LaunchConfig('device_type'),
-                'device_id': 1,
-                'master': LaunchConfig('master'),
-                'serial': '',
-                'statistics_print_interval': 2.0,
-                'camerainfo_url': '',
-                'frame_id': '',
-                'event_message_time_threshold': 1.0e-3,
-                'dvs_enabled': True,
+                "device_type": LaunchConfig("device_type"),
+                "device_id": 1,
+                "master": LaunchConfig("master"),
+                "serial": "",
+                "statistics_print_interval": 2.0,
+                "camerainfo_url": "package://libcaer_driver/config/davis346_calibration.yaml",
+                "frame_id": "",
+                "event_message_time_threshold": 1.0e-3,
+                "dvs_enabled": True,
                 # safe to enable imu
-                'imu_accel_enabled': True,
-                'imu_gyro_enabled': True,
+                "imu_accel_enabled": True,
+                "imu_gyro_enabled": True,
                 # aps affects event quality, disable when not needed
-                'aps_enabled': False,
+                "aps_enabled": False,
                 # other example settings
                 # "aps_exposure": 4000,
                 # "aps_frame_interval": 40000,
@@ -59,7 +59,7 @@ def launch_setup(context, *args, **kwargs):
                 # "OFFBn_fine": 0,  # for DAVIS
             },
         ],
-        remappings=[('~/reset_timestamps', LaunchConfig('reset_topic'))],
+        remappings=[("~/reset_timestamps", LaunchConfig("reset_topic"))],
     )
     return [node]
 
@@ -68,21 +68,21 @@ def generate_launch_description():
     """Create simple node by calling opaque function."""
     return launch.LaunchDescription(
         [
-            LaunchArg('camera_name', default_value=['event_camera'], description='camera name'),
+            LaunchArg("camera_name", default_value=["event_camera"], description="camera name"),
             LaunchArg(
-                'device_type',
-                default_value=['davis'],
-                description='device type (davis, dvxplorer...)',
+                "device_type",
+                default_value=["davis"],
+                description="device type (davis, dvxplorer...)",
             ),
             LaunchArg(
-                'master',
-                default_value=['True'],
-                description='set to true for this camera to be master',
+                "master",
+                default_value=["True"],
+                description="set to true for this camera to be master",
             ),
             LaunchArg(
-                'reset_topic',
-                default_value=['~/reset_timestamps'],
-                description='on the slave, set this to the masters reset topic',
+                "reset_topic",
+                default_value=["~/reset_timestamps"],
+                description="on the slave, set this to the masters reset topic",
             ),
             OpaqueFunction(function=launch_setup),
         ]

@@ -88,8 +88,11 @@ install(PROGRAMS
 
 install(DIRECTORY
   launch
+  config
   DESTINATION share/${PROJECT_NAME}/
-  FILES_MATCHING PATTERN "*.py")
+  FILES_MATCHING
+    PATTERN "*.py"
+    PATTERN "*.yaml")
 
 if(BUILD_TESTING)
   find_package(ament_cmake REQUIRED)
